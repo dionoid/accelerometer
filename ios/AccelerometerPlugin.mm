@@ -18,25 +18,27 @@ CMMotionManager* motionManager;
 	NSLog(@"{accelerometer} Initializing");
 
 	motionManager = [[CMMotionManager alloc] init];
-	[motionManager stopDeviceMotionUpdates];
+    [motionManager stopAccelerometerUpdates];
 
 	return self;
 }
 
 - (void) startEvents:(NSDictionary *)jsonObject {
 	@try {
-		NSLog(@"{accelerometer} Starting");
-		[motionManager stopDeviceMotionUpdates];
-		[motionManager setDeviceMotionUpdateInterval: 1/40.0];
-		[motionManager startDeviceMotionUpdatesToQueue:[[NSOperationQueue alloc] init]
-			withHandler: ^(CMDeviceMotion *motion, NSError *error) {
-				[[PluginManager get] dispatchJSEvent:@{
-					@"name": @"accelerometerEvent",
-						@"x": @(motion.gravity.x),
-						@"y": @(motion.gravity.y),
-						@"z": @(motion.gravity.z)
-				}];
-			}];
+        if (motionManager.isAccelerometerAvailable) {
+            NSLog(@"{accelerometer} Starting");
+            [motionManager stopAccelerometerUpdates];
+            [motionManager setAccelerometerUpdateInterval:1/40.0];
+            [motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init]
+                                                withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
+                [[PluginManager get] dispatchJSEvent:@{
+                                                       @"name": @"accelerometerEvent",
+                                                       @"x": @(accelerometerData.acceleration.x),
+                                                       @"y": @(accelerometerData.acceleration.y),
+                                                       @"z": @(accelerometerData.acceleration.z)
+                                                       }];
+            }];
+        }
 	}
 	@catch (NSException *exception) {
 		NSLog(@"{accelerometer} WARNING: Unable to start events: %@", exception);
@@ -45,7 +47,7 @@ CMMotionManager* motionManager;
 
 - (void) stopEvents:(NSDictionary *)jsonObject {
 	@try {
-		[motionManager stopDeviceMotionUpdates];
+		[motionManager stopAccelerometerUpdates];
 		NSLog(@"{accelerometer} Stopped");
 	}
 	@catch (NSException *exception) {
@@ -54,4 +56,3 @@ CMMotionManager* motionManager;
 }
 
 @end
-
