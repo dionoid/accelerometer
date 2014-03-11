@@ -17,7 +17,7 @@ import android.view.WindowManager;
 
 public class AccelerometerPlugin implements IPlugin, SensorEventListener {
 
-  private Context context;
+	private Context context;
 
 	// Sensors and Manager variables
 	private SensorManager sensorManager;
@@ -26,9 +26,9 @@ public class AccelerometerPlugin implements IPlugin, SensorEventListener {
 	//flag to indicate if the sensors are currently listening for events
 	private boolean sensorsListening = false;
 
-  private float gravitationalConstant = -9.81f;
+	private float gravitationalConstant = -9.81f;
 
-  private class AccelerometerEvent extends Event {
+	private class AccelerometerEvent extends Event {
 		public float x, y, z;
 		public AccelerometerEvent(float x, float y, float z) {
 			super("accelerometerEvent");
@@ -36,23 +36,23 @@ public class AccelerometerPlugin implements IPlugin, SensorEventListener {
 			this.y = y;
 			this.z = z;
 		}
-  }
+	}
 
 	public AccelerometerPlugin() {
 	}
 
 	public void onCreateApplication(Context applicationContext) {
-    context = applicationContext;
+		context = applicationContext;
 
-    // initialize all sensors and the sensor manager
-    sensorManager = (SensorManager) context
-      .getSystemService(Context.SENSOR_SERVICE);
-    accelerometerSensor = sensorManager
-      .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+	// initialize all sensors and the sensor manager
+	sensorManager = (SensorManager) context
+		.getSystemService(Context.SENSOR_SERVICE);
+	accelerometerSensor = sensorManager
+		.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 	}
 
 	public void onCreate(Activity activity, Bundle savedInstanceState) {
-  }
+}
 
 	// Register all needed sensor listeners
 	public void registerListeners() {
@@ -78,24 +78,24 @@ public class AccelerometerPlugin implements IPlugin, SensorEventListener {
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-    // Only look at accelerometer events
-    if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
-        return;
-    }
-    EventQueue.pushEvent(new AccelerometerEvent(
-      event.values[0] / gravitationalConstant,
-      event.values[1] / gravitationalConstant,
-      event.values[2] / gravitationalConstant)
-    );
+		// Only look at accelerometer events
+		if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
+			return;
+		}
+		EventQueue.pushEvent(new AccelerometerEvent(
+			event.values[0] / gravitationalConstant,
+			event.values[1] / gravitationalConstant,
+			event.values[2] / gravitationalConstant)
+		);
 	}
 
-  public void onStart() {
-    registerListeners();
-  }
+	public void onStart() {
+		registerListeners();
+	}
 
-  public void onStop() {
-    unregisterListeners();
-  }
+	public void onStop() {
+		unregisterListeners();
+	}
 
 	public void onResume() {
 	}
