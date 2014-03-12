@@ -44,21 +44,21 @@ public class AccelerometerPlugin implements IPlugin, SensorEventListener {
 	public void onCreateApplication(Context applicationContext) {
 		context = applicationContext;
 
-	// initialize all sensors and the sensor manager
-	sensorManager = (SensorManager) context
-		.getSystemService(Context.SENSOR_SERVICE);
-	accelerometerSensor = sensorManager
-		.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		// initialize all sensors and the sensor manager
+		sensorManager = (SensorManager) context
+			.getSystemService(Context.SENSOR_SERVICE);
+		accelerometerSensor = sensorManager
+			.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 	}
 
 	public void onCreate(Activity activity, Bundle savedInstanceState) {
-}
+	}
 
 	// Register all needed sensor listeners
 	public void registerListeners() {
 		if (!sensorsListening) {
 			sensorManager.registerListener(this, accelerometerSensor,
-					SensorManager.SENSOR_DELAY_GAME);
+					SensorManager.SENSOR_DELAY_UI); //15Hz
 			sensorsListening = true;
 		}
 	}
