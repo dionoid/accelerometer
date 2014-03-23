@@ -28,7 +28,7 @@ CMMotionManager* motionManager;
 		if (motionManager.isAccelerometerAvailable) {
 			NSLog(@"{accelerometer} Starting");
 			[motionManager stopAccelerometerUpdates];
-			[motionManager setAccelerometerUpdateInterval:1/15.0];
+			[motionManager setAccelerometerUpdateInterval:1/15.0]; //15Hz
 			[motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init]
 				withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
 					[[PluginManager get] dispatchJSEvent:@{

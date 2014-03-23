@@ -5,7 +5,7 @@ var clc = require("cli-color");
 
 //called when addon is activated
 exports.init = function (common) {
-	var logger = new common.Formatter('geoloc');
+	var logger = new common.Formatter('accelerometer');
 
 	//logger.log("Initializing");
 
@@ -13,14 +13,13 @@ exports.init = function (common) {
 };
 
 exports.load = function (common) {
-	var logger = new common.Formatter('geoloc');
+	var logger = new common.Formatter('accelerometer');
 
 	//logger.log("Loading");
 }
 
 exports.testapp = function (common, opts, next) {
-	var logger = new common.Formatter('geoloc');
+	var logger = new common.Formatter('accelerometer');
 
 	//logger.log("TestApp Initializing");
 }
-

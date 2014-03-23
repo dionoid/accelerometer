@@ -4,6 +4,7 @@ import com.tealeaf.TeaLeaf;
 import com.tealeaf.plugin.IPlugin;
 import com.tealeaf.event.Event;
 import com.tealeaf.EventQueue;
+import com.tealeaf.logger;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -43,7 +44,9 @@ public class AccelerometerPlugin implements IPlugin, SensorEventListener {
 
 	public void onCreateApplication(Context applicationContext) {
 		context = applicationContext;
+	}
 
+	public void onCreate(Activity activity, Bundle savedInstanceState) {
 		// initialize all sensors and the sensor manager
 		sensorManager = (SensorManager) context
 			.getSystemService(Context.SENSOR_SERVICE);
@@ -51,7 +54,14 @@ public class AccelerometerPlugin implements IPlugin, SensorEventListener {
 			.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 	}
 
-	public void onCreate(Activity activity, Bundle savedInstanceState) {
+	public void startEvents(String jsonData) {
+		logger.log("{accelerometer} startEvents");
+		registerListeners();
+	}
+
+	public void stopEvents(String jsonData) {
+		logger.log("{accelerometer} stopEvents");
+		unregisterListeners();
 	}
 
 	// Register all needed sensor listeners
@@ -90,11 +100,9 @@ public class AccelerometerPlugin implements IPlugin, SensorEventListener {
 	}
 
 	public void onStart() {
-		registerListeners();
 	}
 
 	public void onStop() {
-		unregisterListeners();
 	}
 
 	public void onResume() {
@@ -104,6 +112,7 @@ public class AccelerometerPlugin implements IPlugin, SensorEventListener {
 	}
 
 	public void onDestroy() {
+		unregisterListeners();
 	}
 
 	public void onNewIntent(Intent intent) {
