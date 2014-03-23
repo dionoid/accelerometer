@@ -28,7 +28,8 @@ CMMotionManager* motionManager;
 		if (motionManager.isAccelerometerAvailable) {
 			NSLog(@"{accelerometer} Starting");
 			[motionManager stopAccelerometerUpdates];
-			[motionManager setAccelerometerUpdateInterval:1/15.0]; //15Hz
+			//use 60,000 microseconds delay matching Android's SensorManager.SENSOR_DELAY_UI
+			[motionManager setAccelerometerUpdateInterval:0.06];
 			[motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init]
 				withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
 					[[PluginManager get] dispatchJSEvent:@{

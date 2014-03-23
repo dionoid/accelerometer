@@ -4,7 +4,7 @@ var handleAccel = null;
 
 NATIVE.events.registerHandler('accelerometerEvent', function(evt) {
 	if (handleAccel) {
-		// evt.x, evt.y, evt.z are scaled x,y,z acceleration ranging from -1 to 1.
+		// evt.x, evt.y, evt.z are scaled x,y,z accelerations ranging from -1 to 1.
 		handleAccel(evt);
 	}
 });

@@ -55,12 +55,12 @@ public class AccelerometerPlugin implements IPlugin, SensorEventListener {
 	}
 
 	public void startEvents(String jsonData) {
-		logger.log("{accelerometer} startEvents");
+		//logger.log("{accelerometer} startEvents");
 		registerListeners();
 	}
 
 	public void stopEvents(String jsonData) {
-		logger.log("{accelerometer} stopEvents");
+		//logger.log("{accelerometer} stopEvents");
 		unregisterListeners();
 	}
 
@@ -68,7 +68,7 @@ public class AccelerometerPlugin implements IPlugin, SensorEventListener {
 	public void registerListeners() {
 		if (!sensorsListening) {
 			sensorManager.registerListener(this, accelerometerSensor,
-					SensorManager.SENSOR_DELAY_UI); //15Hz
+					SensorManager.SENSOR_DELAY_UI); //60,000 microseconds delay
 			sensorsListening = true;
 		}
 	}
